@@ -1,0 +1,70 @@
+header {
+  width: 100%;
+  height: 44px;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 44px;
+    z-index: 110;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  .menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+    margin-right: -3px;
+    width: 50px;
+    height: 50px;
+    position: relative;
+    cursor: pointer;
+  }
+
+  p {
+    position: absolute;
+    bottom: 17px;
+    left: -75%;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+  }
+
+  strong {
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 2rem;
+  }
+
+  #menu-img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+
+    .front-face {
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+    }
+
+    .back-face {
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      transform: rotateY(180deg);
+    }
+  }
+}

@@ -7,6 +7,15 @@ import { useRef } from "react";
 export default function HeaderFront() {
   const menuRef = useRef<HTMLDivElement>(null);
 
+  const openMenu = () => {
+    menuRef.current!.classList.toggle("open");
+    const overlayMenu = document.getElementById("overlay-menu");
+
+    if (overlayMenu) {
+      overlayMenu.classList.toggle("open");
+    }
+  };
+
   return (
     <>
       <div className="logo">
@@ -21,9 +30,9 @@ export default function HeaderFront() {
         </Link>
       </div>
       <strong>- Le bureau très graphique -</strong>
-      <div className="menu">
+      <div className="menu" ref={menuRef}>
         <p>menu</p>
-        <div id="menu-img" ref={menuRef}>
+        <div id="menu-img" onClick={openMenu}>
           <div className="front-face">
             <Image
               src="/menu.svg"

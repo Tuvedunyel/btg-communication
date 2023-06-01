@@ -6,13 +6,42 @@ import { useRef } from "react";
 
 export default function HeaderFront() {
   const menuRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
+  const body = document.body;
+  const overlayMenu = document.getElementById("overlay-menu");
+  const overlayContact = document.getElementById("overlay-contact");
 
   const openMenu = () => {
     menuRef.current!.classList.toggle("open");
-    const overlayMenu = document.getElementById("overlay-menu");
+    contactRef.current!.classList.remove("open");
+
+    if (body) {
+      body.classList.toggle("no-scroll");
+    }
+
+    if (overlayContact) {
+      overlayContact.classList.toggle("open");
+    }
 
     if (overlayMenu) {
       overlayMenu.classList.toggle("open");
+    }
+  };
+
+  const openContact = () => {
+    contactRef.current!.classList.toggle("open");
+    menuRef.current!.classList.remove("open");
+
+    if (body) {
+      body.classList.toggle("no-scroll");
+    }
+
+    if (overlayMenu) {
+      overlayMenu.classList.toggle("open");
+    }
+
+    if (overlayContact) {
+      overlayContact.classList.toggle("open");
     }
   };
 
@@ -48,6 +77,28 @@ export default function HeaderFront() {
               alt="Fermer le menu"
               width={50}
               height={50}
+              quality={85}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="contact-icons" ref={contactRef}>
+        <div className="flip-card" onClick={openContact}>
+          <div className="front-face">
+            <Image
+              src="/contact.svg"
+              alt="Ouvrir la fenêtre de contact"
+              width={50}
+              height={64}
+              quality={85}
+            />
+          </div>
+          <div className="back-face">
+            <Image
+              src="/close-contact.svg"
+              alt="Fermer la fenêtre de contact"
+              width={50}
+              height={64}
               quality={85}
             />
           </div>

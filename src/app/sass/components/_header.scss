@@ -113,7 +113,7 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: start;
+    align-items: flex-start;
 
     &::after {
       content: "";
@@ -126,5 +126,51 @@ header {
       border-width: 0 300px calc(100vh - 44px) 0;
       border-color: transparent #fff transparent transparent;
     }
+  }
+}
+
+.contact-icons {
+  cursor: pointer;
+  position: fixed;
+  left: 25px;
+  top: calc(50% - 25px);
+  z-index: 1;
+  height: 50px;
+  width: 50px;
+  transition: 0.2s ease-in-out;
+
+  .flip-card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: 0.2s ease-in-out;
+
+    .front-face {
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      transition: 0.2s ease-in-out;
+    }
+
+    .back-face {
+      display: blakc;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      transform: rotateY(180deg);
+      transition: 0.2s ease-in-out;
+    }
+  }
+
+  &.open .front-face {
+    transform: translateX(180deg);
+  }
+
+  &.open .back-face {
+    transform: translateX(0);
   }
 }

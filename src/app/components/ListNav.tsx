@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 type MenuData = {
   ID: number;
@@ -19,6 +19,18 @@ const MenuItem = ({
   item: MenuData;
   childMenu?: MenuData[];
 }) => {
+  const childRef = useRef<HTMLUListElement>(null);
+
+  const handleClick = (e: React.MouseEvent<HTMLLIElement>, item: MenuData) => {
+    if (
+      childMenu!.some((child) => child.menu_item_parent === item.ID.toString())
+    ) {
+      e.preventDefault();
+      (e.target as HTMLElement).classList.toggle("open");
+      childRef.current!.classList.toggle("open");
+    }
+  };
+
   return (
     <li
       key={item.ID}
@@ -29,13 +41,14 @@ const MenuItem = ({
           ? "has-children"
           : ""
       }
+      onClick={(e) => handleClick(e, item)}
     >
       <Link
         href={`/${item.slug}`}
         dangerouslySetInnerHTML={{ __html: item.title }}
       ></Link>
       {childMenu && (
-        <ul id="subMenu">
+        <ul id="subMenu" ref={childRef}>
           {childMenu.map((child) => {
             if (child.menu_item_parent === item.ID.toString()) {
               return (

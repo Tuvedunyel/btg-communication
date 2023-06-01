@@ -20,13 +20,22 @@ const MenuItem = ({
   childMenu?: MenuData[];
 }) => {
   return (
-    <li key={item.ID}>
+    <li
+      key={item.ID}
+      className={
+        childMenu!.some(
+          (child) => child.menu_item_parent === item.ID.toString()
+        )
+          ? "has-children"
+          : ""
+      }
+    >
       <Link
         href={`/${item.slug}`}
         dangerouslySetInnerHTML={{ __html: item.title }}
       ></Link>
       {childMenu && (
-        <ul>
+        <ul id="subMenu">
           {childMenu.map((child) => {
             if (child.menu_item_parent === item.ID.toString()) {
               return (

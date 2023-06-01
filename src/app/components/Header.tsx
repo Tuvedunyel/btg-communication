@@ -41,7 +41,7 @@ export default function Header() {
           <HeaderFront />
         </div>
       </header>
-      <div id="overlay-menu">
+      <div id="overlay-menu" className={cabin.className}>
         <div className="content">{menu && <ListNav menu={menu.data} />}</div>
       </div>
     </>

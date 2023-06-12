@@ -2,22 +2,32 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function HeaderFront() {
   const menuRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
-  const body = document.body;
-  const overlayMenu = document.getElementById("overlay-menu");
-  const overlayContact = document.getElementById("overlay-contact");
+  const [overlayMenu, setOverlayMenu] = useState<HTMLDivElement>();
+  const [overlayContact, setOverlayContact] = useState<HTMLDivElement>();
+
+  useEffect(() => {
+    const menuElement = document.getElementById("overlay-menu");
+    const contactElement = document.getElementById("overlay-contact");
+
+    if (menuElement instanceof HTMLDivElement) {
+      setOverlayMenu(menuElement);
+    }
+
+    if (contactElement instanceof HTMLDivElement) {
+      setOverlayContact(contactElement);
+    }
+  }, []);
 
   const openMenu = () => {
     menuRef.current!.classList.toggle("open");
     contactRef.current!.classList.remove("open");
 
-    if (body) {
-      body.classList.toggle("no-scroll");
-    }
+    document.body.classList.toggle("no-scroll");
 
     if (overlayContact) {
       overlayContact.classList.toggle("open");
@@ -32,12 +42,10 @@ export default function HeaderFront() {
     contactRef.current!.classList.toggle("open");
     menuRef.current!.classList.remove("open");
 
-    if (body) {
-      body.classList.toggle("no-scroll");
-    }
+    document.body.classList.toggle("no-scroll");
 
     if (overlayMenu) {
-      overlayMenu.classList.toggle("open");
+      overlayMenu.classList.remove("open");
     }
 
     if (overlayContact) {

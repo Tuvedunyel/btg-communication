@@ -4,6 +4,7 @@ import axios from "axios";
 import { use } from "react";
 import https from "https";
 import ListNav from "./ListNav";
+import Contact from "./Contact";
 
 const cabin = Cabin({ subsets: ["latin"] });
 const URL_API = process.env.URL_API;
@@ -44,7 +45,9 @@ export default function Header() {
       <div id="overlay-menu" className={cabin.className}>
         <div className="content">{menu && <ListNav menu={menu.data} />}</div>
       </div>
-      <div id="overlay-contact" className={cabin.className}></div>
+      <div id="overlay-contact" className={cabin.className}>
+        <Contact />
+      </div>
     </>
   );
 }

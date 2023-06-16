@@ -30,7 +30,7 @@ export default function HeaderFront() {
     document.body.classList.toggle("no-scroll");
 
     if (overlayContact) {
-      overlayContact.classList.toggle("open");
+      overlayContact.classList.remove("open");
     }
 
     if (overlayMenu) {

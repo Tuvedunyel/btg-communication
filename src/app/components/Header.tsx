@@ -4,7 +4,8 @@ import axios from "axios";
 import { use } from "react";
 import https from "https";
 import ListNav from "./ListNav";
-import Contact from "./Contact";
+import Rs from "./Rs";
+import ContactFront from "./ContactFront";
 
 const cabin = Cabin({ subsets: ["latin"] });
 const URL_API = process.env.URL_API;
@@ -18,6 +19,36 @@ type Menu = {
     url: string;
     menu_item_parent: string;
   }[];
+};
+
+export type rsOptions = {
+  facebook: {
+    url: string;
+    title: string;
+    target: string;
+  };
+  instagram: {
+    url: string;
+    title: string;
+    target: string;
+  };
+  linkedin: {
+    url: string;
+    title: string;
+    target: string;
+  };
+};
+
+export type OptionsType = {
+  data: rsOptions;
+};
+
+const getOptions = async (): Promise<OptionsType> => {
+  const response = await axios<OptionsType, any>(
+    `${URL_API}/better-rest-endpoints/v1/options/acf`,
+    { httpsAgent: agent }
+  );
+  return response;
 };
 
 const agent = new https.Agent({
@@ -34,6 +65,7 @@ const getMenu = async (): Promise<Menu> => {
 
 export default function Header() {
   const menu = use(getMenu());
+  const options = use(getOptions());
 
   return (
     <>
@@ -43,10 +75,15 @@ export default function Header() {
         </div>
       </header>
       <div id="overlay-menu" className={cabin.className}>
-        <div className="content">{menu && <ListNav menu={menu.data} />}</div>
+        <div className="content">
+          {menu && <ListNav menu={menu.data} rsOptions={options.data} />}
+        </div>
       </div>
       <div id="overlay-contact" className={cabin.className}>
-        <Contact />
+        <section className="content">
+          <Rs rsOptions={options.data} showContact={false} />
+          <ContactFront />
+        </section>
       </div>
     </>
   );

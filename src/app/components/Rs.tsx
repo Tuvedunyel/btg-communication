@@ -1,27 +1,30 @@
 import Image from "next/image";
-import { OptionsType } from "./Contact";
+import { rsOptions } from "./Header";
 
-type rsOptions = {
-  facebook: {
-    url: string;
-    title: string;
-    target: string;
-  };
-  instagram: {
-    url: string;
-    title: string;
-    target: string;
-  };
-  linkedin: {
-    url: string;
-    title: string;
-    target: string;
-  };
-};
-
-export default function Rs({ rsOptions }: { rsOptions: rsOptions }) {
+export default function Rs({
+  rsOptions,
+  showContact,
+}: {
+  rsOptions: rsOptions;
+  showContact: boolean;
+}) {
   return (
     <ul className="rs">
+      {showContact && (
+        <li>
+          <a href="mailto:contact@btg-communication.fr">
+            <span className="screen-reader-text">
+              Nous envoyer directement un email
+            </span>
+            <Image
+              width={48}
+              height={56}
+              src="/contact-degrade.svg"
+              alt="Image d'une enveloppe"
+            />
+          </a>
+        </li>
+      )}
       <li>
         <a href={rsOptions.facebook.url} target={rsOptions.facebook.target}>
           <span className="screen-reader-text">{rsOptions.facebook.title}</span>

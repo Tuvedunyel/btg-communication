@@ -2,6 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { rsOptions } from "./Header";
+import Rs from "./Rs";
 
 type MenuData = {
   ID: number;
@@ -67,7 +69,13 @@ const MenuItem = ({
   );
 };
 
-export default function ListNav({ menu }: { menu: MenuData[] }) {
+export default function ListNav({
+  menu,
+  rsOptions,
+}: {
+  menu: MenuData[];
+  rsOptions: rsOptions;
+}) {
   const [childMenu, setChildMenu] = useState<MenuData[]>([]);
   const [parentMenu, setParentMenu] = useState<MenuData[]>([]);
 
@@ -89,12 +97,13 @@ export default function ListNav({ menu }: { menu: MenuData[] }) {
           quality={75}
         />
       </div>
-      <nav>
+      <nav className="menu-nav">
         <ul id="menu-principal">
           {parentMenu.map((item) => (
             <MenuItem item={item} key={item.ID} childMenu={childMenu} />
           ))}
         </ul>
+        <Rs rsOptions={rsOptions} showContact={true} />
       </nav>
     </div>
   );

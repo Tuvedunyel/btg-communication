@@ -1,5 +1,6 @@
 import Image from "next/image";
-import Header from "./components/Header";
+import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
           <h1>BTG</h1>
         </div>
       </main>
+      <Footer />
     </>
   );
 }

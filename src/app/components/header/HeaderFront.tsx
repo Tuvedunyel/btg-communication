@@ -21,6 +21,13 @@ export default function HeaderFront() {
     if (contactElement instanceof HTMLDivElement) {
       setOverlayContact(contactElement);
     }
+
+    if (
+      !overlayContact?.classList.contains("open") ||
+      !overlayMenu?.classList.contains("open")
+    ) {
+      document.body.classList.remove("no-scroll");
+    }
   }, []);
 
   const openMenu = () => {

@@ -134,13 +134,13 @@
       }
     }
   }
+}
 
-  .error-field {
-    background: rgb(255 0 0 / 50%);
+.error-field {
+  background: rgb(255 0 0 / 50%);
+  color: white;
+
+  &::placeholder {
     color: white;
-
-    &::placeholder {
-      color: white;
-    }
   }
 }

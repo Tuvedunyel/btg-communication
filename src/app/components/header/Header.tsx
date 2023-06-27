@@ -43,24 +43,32 @@ export type OptionsType = {
   data: rsOptions;
 };
 
-const getOptions = async (): Promise<OptionsType> => {
-  const response = await axios<OptionsType, any>(
-    `${URL_API}/better-rest-endpoints/v1/options/acf`,
-    { httpsAgent: agent }
-  );
-  return response;
+const getOptions = async (): Promise<OptionsType | undefined> => {
+  try {
+    const response = await axios<OptionsType, any>(
+      `${URL_API}/better-rest-endpoints/v1/options/acf`,
+      { httpsAgent: agent }
+    );
+    return response;
+  } catch (e) {
+    console.log(`Header getting options error : ${e}`);
+  }
 };
 
 const agent = new https.Agent({
   rejectUnauthorized: false,
 });
 
-const getMenu = async (): Promise<Menu> => {
-  const response = await axios<Menu, any>(
-    `${URL_API}/better-rest-endpoints/v1/menus/principal`,
-    { httpsAgent: agent }
-  );
-  return response;
+const getMenu = async (): Promise<Menu | undefined> => {
+  try {
+    const response = await axios<Menu, any>(
+      `${URL_API}/better-rest-endpoints/v1/menus/principal`,
+      { httpsAgent: agent }
+    );
+    return response;
+  } catch (e) {
+    console.log(`Header getting Menu error : ${e}`);
+  }
 };
 
 export default function Header() {
@@ -76,12 +84,12 @@ export default function Header() {
       </header>
       <div id="overlay-menu" className={cabin.className}>
         <div className="content">
-          {menu && <ListNav menu={menu.data} rsOptions={options.data} />}
+          {menu && <ListNav menu={menu!.data} rsOptions={options!.data} />}
         </div>
       </div>
       <div id="overlay-contact" className={cabin.className}>
         <section className="content">
-          <Rs rsOptions={options.data} showContact={false} />
+          <Rs rsOptions={options!.data} showContact={false} />
           <ContactFront />
         </section>
       </div>

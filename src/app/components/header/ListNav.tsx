@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { rsOptions } from "./Header";
 import Rs from "./Rs";
+import he from "he";
 
 type MenuData = {
   ID: number;
@@ -45,20 +46,14 @@ const MenuItem = ({
       }
       onClick={(e) => handleClick(e, item)}
     >
-      <Link
-        href={`/${item.slug}`}
-        dangerouslySetInnerHTML={{ __html: item.title }}
-      ></Link>
+      <Link href={`/${item.slug}`}>{he.decode(item.title)}</Link>
       {childMenu && (
         <ul id="subMenu" ref={childRef}>
           {childMenu.map((child) => {
             if (child.menu_item_parent === item.ID.toString()) {
               return (
                 <li key={child.ID}>
-                  <Link
-                    href={`/${child.slug}`}
-                    dangerouslySetInnerHTML={{ __html: child.title }}
-                  ></Link>
+                  <Link href={`/${child.slug}`}>{he.decode(child.title)}</Link>
                 </li>
               );
             }

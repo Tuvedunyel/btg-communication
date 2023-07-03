@@ -6,6 +6,7 @@ import { use } from "react";
 import Client from "./template-client/Client";
 import { Metadata, ResolvingMetadata } from "next";
 import he from "he";
+import Savoir from "./template-savoir/Savoir";
 
 const URL_API = process.env.URL_API;
 const agent = new https.Agent({
@@ -26,28 +27,77 @@ export type TemoignagesType = {
   id_video?: string;
 };
 
-type PagesType = {
-  data: PageType[];
+export type ClientType = {
+  temoignage: TemoignagesType[];
+  sous_titre: string;
+  confiances: {
+    image: {
+      id: number;
+      url: string;
+      alt: string;
+      width: number;
+      height: number;
+    };
+  }[];
 };
 
-type DataType = {
+export type SavoirType = {
+  sous_titre: string;
+  image_de_fond: {
+    id: number;
+    url: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
+  texte_agence: string;
+  texte_accompagment: string;
+  texte_bas_de_page: string;
+  lien_agence_tours: {
+    url: string;
+    title: string;
+    target: string;
+  };
+  lien_agence_vannes: {
+    url: string;
+    title: string;
+    target: string;
+  };
+  agence_bas_texte: string;
+  agence_bas_image: {
+    id: number;
+    url: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
+  agence_fond_bleu_texte: string;
+  competences: {
+    icone: {
+      url: string;
+      alt: string;
+      width: number;
+      height: number;
+    };
+    titre: string;
+    texte: string;
+    exemple: string;
+    lien_competence: {
+      url: string;
+      title: string;
+      target: string;
+    };
+  }[];
+};
+
+type DataType<T> = {
   id: number;
   title: string;
+  contnet: string;
+  parent: boolean;
   slug: string;
   template: string;
-  acf: {
-    temoignage: TemoignagesType[];
-    sous_titre: string;
-    confiances: {
-      image: {
-        id: number;
-        url: string;
-        alt: string;
-        width: number;
-        height: number;
-      };
-    }[];
-  };
+  acf: T;
   yoast: {
     yoast_wpseo_title: string;
     yoast_wpseo_metadesc: string;
@@ -62,16 +112,20 @@ type DataType = {
   };
 };
 
-export type PageType = DataType;
+export type PageType<T> = DataType<T>;
 
-const getPages = async (slug: string): Promise<PageType | undefined> => {
+const getPages = async (
+  slug: string
+): Promise<PageType<ClientType | SavoirType> | undefined> => {
   try {
-    const response = await axios<PagesType, any>(
+    const response = await axios<PageType<ClientType | SavoirType>[], any>(
       `${URL_API}/better-rest-endpoints/v1/pages`,
       { httpsAgent: agent }
     );
 
-    return response.data.find((page: PageType) => page.slug === slug);
+    return response.data.find(
+      (page: PageType<ClientType | SavoirType>) => page.slug === slug
+    );
   } catch (e) {
     console.log(`Page error fetch Page : ${e}`);
   }
@@ -83,11 +137,13 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = params;
 
-  const data = await axios<PagesType, any>(
+  const data = await axios<PageType<ClientType | SavoirType>[], any>(
     `${URL_API}/better-rest-endpoints/v1/pages`,
     { httpsAgent: agent }
   ).then((response) =>
-    response.data.find((page: PageType) => page.slug === slug)
+    response.data.find(
+      (page: PageType<ClientType | SavoirType>) => page.slug === slug
+    )
   );
 
   return {
@@ -103,7 +159,12 @@ export default function Page({ params }: { params: { slug: string } }) {
   return (
     <>
       <Header />
-      {data?.template === "template-client" && <Client page={data} />}
+      {data?.template === "template-client" && (
+        <Client page={data as PageType<ClientType>} />
+      )}
+      {data?.template === "template-savoir" && (
+        <Savoir page={data as PageType<SavoirType>} />
+      )}
       <Footer />
     </>
   );

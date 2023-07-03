@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { PageType, TemoignagesType } from "../page";
+import { ClientType, PageType, TemoignagesType } from "../page";
 import Temoin from "./Temoin";
 import he from "he";
 import Link from "next/link";
 
-export default function Client({ page }: { page: PageType }) {
+export default function Client({ page }: { page: PageType<ClientType> }) {
   return (
     <main id="client">
       <section

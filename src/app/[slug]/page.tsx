@@ -51,7 +51,7 @@ export type SavoirType = {
     height: number;
   };
   texte_agence: string;
-  texte_accompagment: string;
+  texte_accompagnement: string;
   texte_bas_de_page: string;
   lien_agence_tours: {
     url: string;

@@ -90,6 +90,20 @@ export default function Savoir({ page }: { page: PageType<SavoirType> }) {
         </div>
       </section>
       <ListSavoir competences={page.acf.competences} />
+      <section className="bottom">
+        <div className="container">
+          <Image
+            src={page.acf.agence_bas_image.url}
+            alt={page.acf.agence_bas_image.alt}
+            width={page.acf.agence_bas_image.width}
+            height={page.acf.agence_bas_image.height}
+          />
+          <div
+            className="bottom-text"
+            dangerouslySetInnerHTML={{ __html: page.acf.agence_bas_texte }}
+          ></div>
+        </div>
+      </section>
     </main>
   );
 }

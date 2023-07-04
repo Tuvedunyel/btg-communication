@@ -398,4 +398,12 @@
       }
     }
   }
+
+  .bottom {
+    margin-top: 9.5rem;
+    max-height: 600px;
+    display: flex;
+    justify-content: flex-end;
+    top: -3rem;
+  }
 }

@@ -104,6 +104,30 @@ export default function Savoir({ page }: { page: PageType<SavoirType> }) {
           ></div>
         </div>
       </section>
+      <section className="bottom-blue">
+        <div className="container">
+          <div className="texte">
+            <Image
+              src="/wave-radiant.gif"
+              alt="Vague en dégradée animée"
+              width={188}
+              height={37}
+            />
+            <div
+              className="text__content"
+              dangerouslySetInnerHTML={{
+                __html: page.acf.agence_fond_bleu_texte,
+              }}
+            ></div>
+            <Image
+              src="/wave-radiant.gif"
+              alt="Vague en dégradée animée"
+              width={188}
+              height={37}
+            />
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

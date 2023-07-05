@@ -405,5 +405,66 @@
     display: flex;
     justify-content: flex-end;
     top: -3rem;
+
+    .container {
+      max-width: 95.5%;
+      margin-inline: auto;
+      height: 100%;
+      position: relative;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .bottom-text {
+      position: absolute;
+      z-index: 5;
+      top: 10%;
+      left: 31%;
+      width: 62%;
+      background: white;
+      padding: 2rem 5rem;
+      font-size: 2.1rem;
+      font-weight: 300;
+    }
+  }
+
+  .bottom-blue {
+    background: #08243a;
+    color: white;
+    height: 620px;
+
+    .container {
+      height: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      width: 56%;
+      margin-right: 7em;
+      padding-bottom: 3em;
+
+      .texte {
+        font-size: 2.1rem;
+        font-weight: 300;
+        max-width: 85%;
+        position: relative;
+
+        img {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          margin-block: auto;
+          transform: rotate(90deg);
+
+          &:first-of-type {
+            left: -7em;
+          }
+
+          &:last-of-type {
+            right: -7em;
+          }
+        }
+      }
+    }
   }
 }

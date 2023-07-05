@@ -2,6 +2,8 @@ import Footer from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
 import axios from "axios";
 import { use } from "react";
+import he from "he";
+import Image from "next/image";
 const URL_API = process.env.URL_API;
 
 type ImageContentType = {
@@ -75,7 +77,14 @@ export default function Page({ params }: { params: { id: string } }) {
       <Header />
       <main id="realisations">
         <section className="banner">
-          <h1>Réalisations</h1>
+          <div className="container">
+            <Image
+              src={data.acf.poster_single.url}
+              alt={data.acf.poster_single.alt}
+              width={data.acf.poster_single.width}
+              height={data.acf.poster_single.height}
+            />
+          </div>
         </section>
       </main>
       <Footer />

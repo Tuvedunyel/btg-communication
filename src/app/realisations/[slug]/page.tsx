@@ -4,9 +4,10 @@ import axios from "axios";
 import { use } from "react";
 import he from "he";
 import Image from "next/image";
+import AcfImage from "./AcfImage";
 const URL_API = process.env.URL_API;
 
-type ImageContentType = {
+export type ImageContentType = {
   acf_fc_layout: string;
   image: {
     id: number;
@@ -17,7 +18,7 @@ type ImageContentType = {
   };
 };
 
-type TextContentType = {
+export type TextContentType = {
   acf_fc_layout: string;
   texte: string;
 };
@@ -57,20 +58,20 @@ export type RealType = {
   };
 };
 
-const getRealisation = async (id: string) => {
+const getRealisation = async (slug: string) => {
   try {
     const response = await axios.get(
-      `${URL_API}/better-rest-endpoints/v1/realisations/${id}`
+      `${URL_API}/better-rest-endpoints/v1/realisations`
     );
-    return response.data;
+    return response.data.find((real: RealType) => real.slug === slug);
   } catch (e) {
     console.log(`Realisation error fetch Realisation : ${e}`);
   }
 };
 
-export default function Page({ params }: { params: { id: string } }) {
-  const { id } = params;
-  const data = use(getRealisation(id));
+export default function Page({ params }: { params: { slug: string } }) {
+  const { slug } = params;
+  const data = use(getRealisation(slug));
 
   return (
     <>
@@ -84,6 +85,43 @@ export default function Page({ params }: { params: { id: string } }) {
               width={data.acf.poster_single.width}
               height={data.acf.poster_single.height}
             />
+          </div>
+        </section>
+        <section className="top">
+          <div className="container">
+            <h1>{he.decode(data.title)}</h1>
+            <div
+              className="content"
+              dangerouslySetInnerHTML={{ __html: data.content }}
+            ></div>
+            <div
+              className="accroche"
+              dangerouslySetInnerHTML={{ __html: data.acf.accroche }}
+            ></div>
+            <Image
+              src="/wave-radiant.gif"
+              alt="Vague en dégradé"
+              width={188}
+              height={37}
+              className="wave-radiant"
+            />
+          </div>
+        </section>
+        <section className="acf-layouts">
+          <div className="container">
+            <ul>
+              {data.acf.content.map(
+                (item: ImageContentType | TextContentType, index: number) => (
+                  <li key={index}>
+                    {item.acf_fc_layout === "image" ? (
+                      <AcfImage image={item} />
+                    ) : (
+                      ""
+                    )}
+                  </li>
+                )
+              )}
+            </ul>
           </div>
         </section>
       </main>

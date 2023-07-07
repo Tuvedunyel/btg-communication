@@ -71,6 +71,23 @@ const getRealisation = async (slug: string) => {
   }
 };
 
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const data = await axios(
+    `${URL_API}/better-rest-endpoints/v1/realisations`
+  ).then((response) =>
+    response.data.find((real: RealType) => real.slug === params.slug)
+  );
+
+  return {
+    title: he.decode(data?.title),
+    description: he.decode(data?.yoast.yoast_wpseo_metadesc),
+  };
+}
+
 export default function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const data = use(getRealisation(slug));

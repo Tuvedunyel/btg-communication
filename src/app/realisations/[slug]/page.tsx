@@ -5,6 +5,8 @@ import { use } from "react";
 import he from "he";
 import Image from "next/image";
 import AcfImage from "./AcfImage";
+import AcfText from "./AcfText";
+import Link from "next/link";
 const URL_API = process.env.URL_API;
 
 export type ImageContentType = {
@@ -73,6 +75,14 @@ export default function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const data = use(getRealisation(slug));
 
+  const isImageContentType = (object: any): object is ImageContentType => {
+    return object.acf_fc_layout === "image";
+  };
+
+  const isTextContentType = (object: any): object is TextContentType => {
+    return object.acf_fc_layout === "texte";
+  };
+
   return (
     <>
       <Header />
@@ -113,14 +123,31 @@ export default function Page({ params }: { params: { slug: string } }) {
               {data.acf.content.map(
                 (item: ImageContentType | TextContentType, index: number) => (
                   <li key={index}>
-                    {item.acf_fc_layout === "image" ? (
+                    {isImageContentType(item) ? (
                       <AcfImage image={item} />
-                    ) : (
-                      ""
-                    )}
+                    ) : isTextContentType(item) ? (
+                      <AcfText text={item} />
+                    ) : null}
                   </li>
                 )
               )}
+              <li>
+                <Link href="/" className="contact-link">
+                  Nous contacter
+                  <svg
+                    className="arrow"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 100 100"
+                    x="0px"
+                    y="0px"
+                  >
+                    <title>Arrows</title>
+                    <g data-name="Layer 2">
+                      <polygon points="44.13 72.13 58 86 94.25 50 57.87 13.13 44 27 57.51 41 6 41 6 59 57.51 59 44.13 72.13"></polygon>
+                    </g>
+                  </svg>
+                </Link>
+              </li>
             </ul>
           </div>
         </section>

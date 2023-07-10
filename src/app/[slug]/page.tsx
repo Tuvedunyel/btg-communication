@@ -7,6 +7,7 @@ import Client from "./template-client/Client";
 import { Metadata, ResolvingMetadata } from "next";
 import he from "he";
 import Savoir from "./template-savoir/Savoir";
+import Realisation from "./template-real/Realisation";
 
 const URL_API = process.env.URL_API;
 const agent = new https.Agent({
@@ -25,6 +26,15 @@ export type TemoignagesType = {
   };
   description: string;
   id_video?: string;
+};
+
+export type RealisationType = {
+  banner: {
+    url: string;
+    alt: string;
+    width: number;
+    height: number;
+  };
 };
 
 export type ClientType = {
@@ -116,10 +126,10 @@ export type PageType<T> = DataType<T>;
 
 const getPages = async (
   slug: string
-): Promise<PageType<ClientType | SavoirType> | undefined> => {
+): Promise<PageType<ClientType | SavoirType | RealisationType> | undefined> => {
   try {
     const response = await axios<PageType<ClientType | SavoirType>[], any>(
-      `${URL_API}/better-rest-endpoints/v1/pages`,
+      `${URL_API}/better-rest-endpoints/v1/pages?per_page=100`,
       { httpsAgent: agent }
     );
 
@@ -138,7 +148,7 @@ export async function generateMetadata(
   const { slug } = params;
 
   const data = await axios<PageType<ClientType | SavoirType>[], any>(
-    `${URL_API}/better-rest-endpoints/v1/pages`,
+    `${URL_API}/better-rest-endpoints/v1/pages?per_page=100`,
     { httpsAgent: agent }
   ).then((response) =>
     response.data.find(
@@ -164,6 +174,11 @@ export default function Page({ params }: { params: { slug: string } }) {
       )}
       {data?.template === "template-savoir" && (
         <Savoir page={data as PageType<SavoirType>} />
+      )}
+      {data?.template === "template-realisations" && (
+        <>
+          <Realisation page={data as PageType<RealisationType>} />
+        </>
       )}
       <Footer />
     </>

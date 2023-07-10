@@ -35,6 +35,7 @@ export type RealisationType = {
     width: number;
     height: number;
   };
+  sous_titre: string;
 };
 
 export type ClientType = {
@@ -103,7 +104,7 @@ export type SavoirType = {
 type DataType<T> = {
   id: number;
   title: string;
-  contnet: string;
+  content: string;
   parent: boolean;
   slug: string;
   template: string;

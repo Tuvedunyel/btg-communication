@@ -1,0 +1,58 @@
+#template-realisations {
+  margin-top: 0;
+
+  .container {
+    max-width: 95%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+
+    .logo {
+      margin-top: 10rem;
+    }
+
+    .vague {
+      width: 67px;
+      height: 11px;
+      margin-block: 4rem 2.5rem;
+      transform: rotate(180deg);
+
+      svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    h1 {
+      font-size: 5.4rem;
+      font-weight: 700;
+      font-family: "Cabin", sans-serif;
+      text-align: center;
+    }
+
+    .sub-title {
+      font-size: 2.4rem;
+      font-weight: 600;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 7.5rem;
+      font-family: "Cabin", sans-serif;
+    }
+  }
+
+  .content-container {
+    margin-top: 5rem;
+  }
+
+  .content {
+    color: black;
+    font-size: 1.8rem;
+    font-weight: 300;
+    text-align: center;
+    width: 75%;
+    margin-bottom: 6rem;
+  }
+}

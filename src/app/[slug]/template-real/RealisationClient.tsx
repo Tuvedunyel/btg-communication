@@ -2,8 +2,9 @@
 import { PageType, RealisationType } from "../page";
 import Image from "next/image";
 import he from "he";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RealType } from "./Realisation";
+import Link from "next/link";
 
 export default function RealisationClient({
   page,
@@ -13,9 +14,16 @@ export default function RealisationClient({
   data: RealType[];
 }) {
   const [filter, setFilter] = useState<string>("all");
+  const [filteredData, setFilteredData] = useState(data);
+
+  useEffect(() => {
+    if (filter === "all") {
+      setFilteredData(data);
+    }
+  }, [data, filter]);
 
   return (
-    <div>
+    <>
       <ul className="categories-filter">
         <li>
           <button
@@ -72,6 +80,37 @@ export default function RealisationClient({
           </li>
         ))}
       </ul>
-    </div>
+      <div className="all-projects">
+        <ul className="projects-container">
+          {data.map((project, index: number) => (
+            <li key={index}>
+              <Link href={`/realisations/${project.slug}`}>
+                <Image
+                  src={project.media.medium}
+                  alt={project.title}
+                  width={321.19}
+                  height={393.94}
+                />
+                <div className="overlay">
+                  <div className="bg-overlay"></div>
+                  <h3>{project.title}</h3>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 371.9 429.5"
+                  >
+                    <path d="M186 0L0 107.4v214.7l186 107.4 186-107.4V107.4L186 0zm174.9 315.7l-175 101-175-101v-202l175-101 175 101v202z"></path>
+                    <path d="M169.3 134.7v63.6h-61.2v32.3h61.2v64.2h23.3v-64.2h61.2v-32.3h-61.2v-63.6z"></path>
+                  </svg>
+                  <div
+                    className="project-content"
+                    dangerouslySetInnerHTML={{ __html: project.content }}
+                  ></div>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 }

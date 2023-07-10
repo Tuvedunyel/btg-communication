@@ -2,12 +2,61 @@ import Image from "next/image";
 import { PageType, RealisationType } from "../page";
 import he from "he";
 import RealisationClient from "./RealisationClient";
+import axios from "axios";
+import { use } from "react";
+
+export type RealType = {
+  id: number;
+  title: string;
+  slug: string;
+  date: string;
+  acf: {
+    banner: {
+      url: string;
+      alt: string;
+      width: number;
+      height: number;
+    };
+  };
+  excerpt: string;
+  content: string;
+  author: string;
+  yoast: {
+    yoast_wpseo_metadesc: string;
+  };
+  media: {
+    thumbnail: string;
+    medium: string;
+    medium_large: string;
+    large: string;
+    "1536x1536": string;
+    "2048x2048": string;
+  };
+};
+
+const URL_API = process.env.URL_API;
+
+const getRealisation = async (): Promise<{
+  data: RealType[] | undefined;
+  error: boolean;
+}> => {
+  try {
+    const response = await axios.get(
+      `${URL_API}/better-rest-endpoints/v1/realisations`
+    );
+    return { data: response.data, error: false };
+  } catch (e) {
+    return { data: undefined, error: true };
+  }
+};
 
 export default function Realisation({
   page,
 }: {
   page: PageType<RealisationType>;
 }) {
+  const { data, error } = use(getRealisation());
+
   return (
     <main id="template-realisations">
       <section className="top">
@@ -45,7 +94,16 @@ export default function Realisation({
             className="content"
             dangerouslySetInnerHTML={{ __html: page.content }}
           ></div>
-          <RealisationClient page={page} />
+          {!error ? (
+            <RealisationClient page={page} data={data!} />
+          ) : (
+            <>
+              <h1>
+                Une erreur c&apos;est produite sur le chargement de cette page.
+              </h1>
+              <p>Veuillez recharger votre page ou réessayer plus tard</p>
+            </>
+          )}
         </div>
       </section>
     </main>

@@ -36,6 +36,21 @@ export type RealisationType = {
     height: number;
   };
   sous_titre: string;
+  categories: {
+    nom: string;
+    image: {
+      url: string;
+      alt: string;
+      width: number;
+      height: number;
+    };
+    image_degrade: {
+      url: string;
+      alt: string;
+      width: number;
+      height: number;
+    };
+  }[];
 };
 
 export type ClientType = {

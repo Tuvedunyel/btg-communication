@@ -1,0 +1,39 @@
+#expertise {
+  margin-top: 0;
+
+  .top {
+    .banner {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 621.25px;
+
+      .vague {
+        margin-block: 4rem 2.5rem;
+        transform: rotate(180deg);
+        width: 67px;
+
+        svg {
+          fill: white;
+        }
+      }
+
+      h1 {
+        font-size: 5.4rem;
+        font-weight: 700;
+        font-family: "Cabin", sans-serif;
+        color: white;
+      }
+
+      h2 {
+        color: white;
+        font-style: italic;
+        font-family: "Cabin", sans-serif;
+        font-size: 2.4rem;
+        font-weight: 600;
+      }
+    }
+  }
+}

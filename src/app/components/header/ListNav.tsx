@@ -53,7 +53,9 @@ const MenuItem = ({
             if (child.menu_item_parent === item.ID.toString()) {
               return (
                 <li key={child.ID}>
-                  <Link href={`/${child.slug}`}>{he.decode(child.title)}</Link>
+                  <Link href={`/notre-expertise/${child.slug}`}>
+                    {he.decode(child.title)}
+                  </Link>
                 </li>
               );
             }

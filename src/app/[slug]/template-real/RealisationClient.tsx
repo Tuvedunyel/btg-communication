@@ -19,6 +19,10 @@ export default function RealisationClient({
   useEffect(() => {
     if (filter === "all") {
       setFilteredData(data);
+    } else {
+      setFilteredData(
+        data.filter((real) => real.terms.some((term) => term.name === filter))
+      );
     }
   }, [data, filter]);
 
@@ -82,7 +86,7 @@ export default function RealisationClient({
       </ul>
       <div className="all-projects">
         <ul className="projects-container">
-          {data.map((project, index: number) => (
+          {filteredData.map((project, index: number) => (
             <li key={index}>
               <Link href={`/realisations/${project.slug}`}>
                 <Image
@@ -90,6 +94,8 @@ export default function RealisationClient({
                   alt={project.title}
                   width={321.19}
                   height={393.94}
+                  quality={100}
+                  loading="lazy"
                 />
                 <div className="overlay">
                   <div className="bg-overlay"></div>

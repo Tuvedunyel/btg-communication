@@ -8,6 +8,7 @@ import AcfImage from "./AcfImage";
 import AcfText from "./AcfText";
 import Link from "next/link";
 import MoreProject from "./MoreProject";
+import AcfVideo from "./AcfVideo";
 const URL_API = process.env.URL_API;
 
 export type ImageContentType = {
@@ -19,6 +20,11 @@ export type ImageContentType = {
     width: number;
     height: number;
   };
+};
+
+export type VideoContentType = {
+  acf_fc_layout: string;
+  video: string;
 };
 
 export type TextContentType = {
@@ -44,7 +50,7 @@ export type RealType = {
   title: string;
   slug: string;
   date: string;
-  acf: ACFType<ImageContentType | TextContentType>;
+  acf: ACFType<ImageContentType | TextContentType | VideoContentType>;
   excerpt: string;
   content: string;
   author: string;
@@ -150,13 +156,18 @@ export default function Page({ params }: { params: { slug: string } }) {
             <div className="container">
               <ul>
                 {data!.acf.content.map(
-                  (item: ImageContentType | TextContentType, index: number) => (
+                  (
+                    item: ImageContentType | TextContentType | VideoContentType,
+                    index: number
+                  ) => (
                     <li key={index}>
                       {isImageContentType(item) ? (
                         <AcfImage image={item} />
                       ) : isTextContentType(item) ? (
                         <AcfText text={item} />
-                      ) : null}
+                      ) : (
+                        <AcfVideo video={item} />
+                      )}
                     </li>
                   )
                 )}

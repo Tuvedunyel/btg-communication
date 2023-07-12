@@ -4,8 +4,26 @@ import axios from "axios";
 import he from "he";
 import Image from "next/image";
 import { use } from "react";
+import AcfText from "./AcfText";
+import AcfImage from "./AcfImage";
 
-export type DomaineType = {
+export type TextContentType = {
+  acf_fc_layout: string;
+  texte: string;
+};
+export type ImageContentType = {
+  acf_fc_layout: string;
+  image: {
+    id: number;
+    url: string;
+    alt: string;
+    name: string;
+    width: number;
+    height: number;
+  };
+};
+
+export type DomaineType<T> = {
   id: number;
   title: string;
   slug: string;
@@ -13,6 +31,7 @@ export type DomaineType = {
   acf: {
     sous_titre: string;
     titre: string;
+    content: T[];
   };
   yoast: {
     yoast_wpseo_metadesc: string;
@@ -27,14 +46,14 @@ export type DomaineType = {
   };
 };
 
-export type allDomaineType = DomaineType[];
+export type allDomaineType = DomaineType<ImageContentType | TextContentType>[];
 
 const URL_API = process.env.URL_API;
 
 const getDomaines = async (
   slug: string
 ): Promise<{
-  data: DomaineType | undefined;
+  data: DomaineType<ImageContentType | TextContentType> | undefined;
   allData: allDomaineType;
   error: boolean;
 }> => {
@@ -43,7 +62,10 @@ const getDomaines = async (
       `${URL_API}/better-rest-endpoints/v1/domaines`
     );
     return {
-      data: response.data.find((domaine: DomaineType) => domaine.slug === slug),
+      data: response.data.find(
+        (domaine: DomaineType<ImageContentType | TextContentType>) =>
+          domaine.slug === slug
+      ),
       allData: response.data,
       error: false,
     };
@@ -59,7 +81,10 @@ export async function generateMetadata({
 }) {
   const data = await axios(`${URL_API}/better-rest-endpoints/v1/domaines`).then(
     (response) =>
-      response.data.find((domaine: DomaineType) => domaine.slug === params.slug)
+      response.data.find(
+        (domaine: DomaineType<ImageContentType | TextContentType>) =>
+          domaine.slug === params.slug
+      )
   );
 
   return {
@@ -71,6 +96,14 @@ export async function generateMetadata({
 export default function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const { data, allData, error } = use(getDomaines(slug));
+
+  const isImageContentType = (object: any): object is ImageContentType => {
+    return object.acf_fc_layout === "image";
+  };
+
+  const isTextContentType = (object: any): object is TextContentType => {
+    return object.acf_fc_layout === "texte";
+  };
 
   return (
     <>
@@ -97,8 +130,34 @@ export default function Page({ params }: { params: { slug: string } }) {
                 </svg>
               </div>
               <h1>{he.decode(data!.title)}</h1>
-              <h2>{he.decode(data!.acf.sous_titre)}</h2>
+              <strong>{he.decode(data!.acf.sous_titre)}</strong>
             </div>
+          </div>
+        </section>
+        <section className="content-container">
+          <div className="container">
+            <h2>{he.decode(data!.acf.titre)}</h2>
+            <div
+              className="slogan"
+              dangerouslySetInnerHTML={{ __html: data!.content }}
+            ></div>
+            <Image
+              src="/wave-radiant.gif"
+              alt="Une vague en dégradé de rose et violet"
+              width={188}
+              height={36.3}
+              className="wave-radiant"
+            />
+            <ul className="content">
+              {data!.acf.content.map(
+                (item: ImageContentType | TextContentType, index: number) => (
+                  <li key={index}>
+                    {isTextContentType(item) && <AcfText data={item} />}
+                    {isImageContentType(item) && <AcfImage data={item} />}
+                  </li>
+                )
+              )}
+            </ul>
           </div>
         </section>
       </main>

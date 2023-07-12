@@ -46,21 +46,27 @@ const MenuItem = ({
       }
       onClick={(e) => handleClick(e, item)}
     >
-      <Link href={`/${item.slug}`}>{he.decode(item.title)}</Link>
-      {childMenu && (
-        <ul id="subMenu" ref={childRef}>
-          {childMenu.map((child) => {
-            if (child.menu_item_parent === item.ID.toString()) {
-              return (
-                <li key={child.ID}>
-                  <Link href={`/notre-expertise/${child.slug}`}>
-                    {he.decode(child.title)}
-                  </Link>
-                </li>
-              );
-            }
-          })}
-        </ul>
+      {item.slug !== "#" ? (
+        <Link href={`/${item.slug}`}>{he.decode(item.title)}</Link>
+      ) : (
+        <>
+          <p className="false-link">{he.decode(item.title)}</p>
+          {childMenu && (
+            <ul id="subMenu" ref={childRef}>
+              {childMenu.map((child) => {
+                if (child.menu_item_parent === item.ID.toString()) {
+                  return (
+                    <li key={child.ID}>
+                      <Link href={`/notre-expertise/${child.slug}`}>
+                        {he.decode(child.title)}
+                      </Link>
+                    </li>
+                  );
+                }
+              })}
+            </ul>
+          )}
+        </>
       )}
     </li>
   );

@@ -43,7 +43,13 @@
     }
 
     &.has-children {
-      a::before {
+      .false-link {
+        position: relative;
+        width: fit-content;
+        cursor: pointer;
+      }
+
+      .false-link::before {
         content: "";
         pointer-events: all;
         background: url("/show-more.svg") no-repeat center;
@@ -52,14 +58,14 @@
         display: block;
         position: absolute;
         right: -3.5em;
-        top: -0.2em;
+        top: 0.2em;
       }
 
-      a::after {
+      .false-link::after {
         display: none;
       }
 
-      a.open {
+      .false-link.open {
         &::before {
           background: url("/close.svg") no-repeat center;
         }
@@ -76,7 +82,7 @@
     max-height: 0;
     margin-left: 55px;
     margin-top: -5px;
-    transition: 0.2s ease-in-out;
+    transition: 0.5s ease-in-out;
     list-style-position: inside;
     list-style-type: disc;
 

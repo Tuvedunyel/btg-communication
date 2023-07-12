@@ -27,13 +27,75 @@
         color: white;
       }
 
-      h2 {
+      strong {
         color: white;
         font-style: italic;
         font-family: "Cabin", sans-serif;
         font-size: 2.4rem;
         font-weight: 600;
       }
+    }
+  }
+
+  .content-container {
+    margin-top: 5rem;
+
+    .container {
+      max-width: 1250px;
+    }
+
+    h2 {
+      font-size: 5.6rem;
+      font-family: "Cabin", sans-serif;
+      text-transform: uppercase;
+      padding: 0;
+      font-weight: 700;
+      padding: 0.5rem 0 3rem 0.5rem;
+      line-height: 0.8;
+    }
+
+    .slogan {
+      font-size: 1.8rem;
+      font-family: "Exo", sans-serif;
+      font-weight: 300;
+      text-transform: uppercase;
+      font-style: normal;
+      margin-block: 3rem 2rem;
+    }
+
+    .wave-radiant {
+      transform: rotate(180deg);
+      margin: 4rem 6rem;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.8rem;
+      font-family: "Exo", sans-serif;
+      font-weight: 300;
+
+      a {
+        color: black;
+        text-decoration: none;
+      }
+
+      img {
+        margin-block: 2.5rem;
+      }
+
+      p {
+        padding-left: 6rem;
+      }
+    }
+
+    h3 {
+      font-size: 2.4rem;
+      font-weight: 600;
+      font-family: "Cabin", sans-serif;
+      margin-block: 3rem 2rem;
     }
   }
 }

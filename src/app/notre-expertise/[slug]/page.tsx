@@ -6,6 +6,7 @@ import Image from "next/image";
 import { use } from "react";
 import AcfText from "./AcfText";
 import AcfImage from "./AcfImage";
+import OtherDomain from "./OtherDomain";
 
 export type TextContentType = {
   acf_fc_layout: string;
@@ -29,6 +30,12 @@ export type DomaineType<T> = {
   slug: string;
   content: string;
   acf: {
+    logo_noir: {
+      url: string;
+      alt: string;
+      width: string;
+      height: string;
+    };
     sous_titre: string;
     titre: string;
     content: T[];
@@ -158,6 +165,13 @@ export default function Page({ params }: { params: { slug: string } }) {
                 )
               )}
             </ul>
+          </div>
+        </section>
+        <section className="other-domaines">
+          <div className="container">
+            <h4>Nos autres domaines d&apos;expertise</h4>
+            <div className="separator"></div>
+            <OtherDomain domains={allData} />
           </div>
         </section>
       </main>

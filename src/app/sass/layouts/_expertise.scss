@@ -98,4 +98,77 @@
       margin-block: 3rem 2rem;
     }
   }
+
+  .other-domaines {
+    margin-top: 2em;
+    .container {
+      max-width: 1250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    h4 {
+      font-size: 1.8rem;
+      font-weight: 300;
+    }
+
+    .separator {
+      width: 100%;
+      align-self: center;
+      border: 3px dotted black;
+      border-bottom: none;
+      margin-block: 1.5rem 2.5rem;
+    }
+
+    .domains-list {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 2rem;
+
+      .img-container {
+        position: relative;
+        display: inline-block;
+        background: black;
+        transition: 0.1s ease-in-out;
+      }
+
+      a {
+        transition: 0.1s ease-in-out;
+
+        &:hover {
+          .img-container {
+            background: linear-gradient(-45.9deg, #8670cc, 50%, #ff5e81);
+          }
+        }
+      }
+
+      img {
+        margin-right: 0;
+        display: block;
+        opacity: 0;
+      }
+
+      a {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.7rem;
+        text-decoration: none;
+      }
+
+      strong {
+        font-size: 2rem;
+        font-weight: 400;
+        font-family: "Cabin", sans-serif;
+        text-align: center;
+        display: inline-block;
+        max-width: 156px;
+        color: black;
+      }
+    }
+  }
 }

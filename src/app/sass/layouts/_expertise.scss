@@ -131,24 +131,12 @@
       .img-container {
         position: relative;
         display: inline-block;
-        background: black;
-        transition: 0.1s ease-in-out;
-      }
-
-      a {
-        transition: 0.1s ease-in-out;
-
-        &:hover {
-          .img-container {
-            background: linear-gradient(-45.9deg, #8670cc, 50%, #ff5e81);
-          }
-        }
       }
 
       img {
         margin-right: 0;
         display: block;
-        opacity: 0;
+        opacity: 1;
       }
 
       a {

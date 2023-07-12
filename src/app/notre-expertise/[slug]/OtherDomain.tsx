@@ -13,12 +13,7 @@ export default function OtherDomain({
       {domains.map((domain, index: number) => (
         <li key={index}>
           <Link href={`/notre-expertise/${domain.slug}`}>
-            <div
-              className="img-container"
-              style={{
-                WebkitMaskImage: `url(${domain.acf.logo_noir.url})`,
-              }}
-            >
+            <div className="img-container">
               <Image
                 src={domain.acf.logo_noir.url}
                 alt={domain.acf.logo_noir.alt}
